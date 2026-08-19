@@ -13,6 +13,9 @@ dist/
 # Notebooks
 .ipynb_checkpoints/
 
+# IDE
+.idea/
+
 # Données locales / secrets
 .env
 *.sqlite3
