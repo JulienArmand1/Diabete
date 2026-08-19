@@ -1,0 +1,22 @@
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Données locales / secrets
+.env
+*.sqlite3
+data/raw/
+
+# OS
+.DS_Store
