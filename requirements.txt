@@ -1,0 +1,10 @@
+# Dépendances directes du projet (Python 3.13)
+# Installation : pip install -r requirements.txt
+
+matplotlib==3.11.1
+numpy==2.5.2
+pandas==3.0.5
+python-dotenv==1.2.3
+requests==2.34.2
+scikit-learn==1.9.0
+statsmodels==0.14.6

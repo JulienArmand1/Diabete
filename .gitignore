@@ -19,7 +19,16 @@ dist/
 # Données locales / secrets
 .env
 *.sqlite3
-data/raw/
+
+# Données de santé — NE JAMAIS versionner (dépôt public)
+*.csv
+*.numbers
+*.xlsx
+data/
+
+# figures/ est versionné : il ne contient que les figures du README, choisies
+# pour ne montrer qu'une journée de tracé. Ne JAMAIS y déposer une figure
+# couvrant l'export complet (plusieurs mois de glycémie d'une personne réelle).
 
 # OS
 .DS_Store
