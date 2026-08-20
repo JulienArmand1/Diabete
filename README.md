@@ -64,11 +64,12 @@ window. On a genuinely sharp fall, this application fires a few minutes later
 than they would. That is not a side effect to be explained away; it is the
 price of the estimator.
 
-The patient was shown both behaviours and chose this one. The reasoning was
-straightforward: an alert that fires on noise gets ignored, and an ignored
-alert protects no one. A few minutes of delay on a real event was judged the
-better failure mode than repeated false alarms — especially at night, where
-alarm fatigue is the thing most likely to make the whole system useless. That
+The patient chose the slower estimator anyway, for a reason about the **end** of
+an episode rather than its start. During steep falls, the arrow in the existing
+apps often flipped to *stable* while glucose was still dropping clearly — a
+false all-clear, which invites you to stop watching mid-event. The 40-minute fit
+stays negative until the fall genuinely flattens, so it can be trusted to say
+when an episode is over. Starting late was accepted to gain that. That
 is a preference, not a finding: a patient with different hypoglycaemia
 awareness could reasonably choose the opposite, and `WLS_WINDOW` and
 `WLS_DECAY` are exposed as parameters precisely because this is a judgement
@@ -253,26 +254,16 @@ right-skewed. The observed difference is compared against that null.
 with replacement within each period, giving the 95 % interval on the size of
 the change.
 
-**Resolution floor.** With 100 000 permutations the smallest reachable p-value
-is 1/100 001 ≈ 0.00001. The scripts print `< 0.00001` rather than a
-misleadingly precise number when a result sits on that floor.
-
-An earlier version used a trimmed mean as a robust estimator. It was removed
-after testing: the plain mean, the trimmed mean and the median all gave the
-same answer to within 0.02 percentage points, so the trimming added a
-complication and an asymmetric-trimming artefact without changing anything.
 
 ### What these numbers do and do not establish
 
-The association is large and the tests are unambiguous about it. **The study
-design is not.**
+The association is large and the tests are unambiguous about it.
 
-This is a **single-subject, observational, before-and-after comparison**.
+However, this is a **single-subject, observational, before-and-after comparison**.
 There is no control group, no randomisation, and no blinding. The alerting
 system was introduced around the cutoff date, but it was not the only thing
 that changed in that person's life, and nothing in this design separates its
-effect from anything else that changed at the same time — a new sensor batch,
-a change in pump settings, the season, a change in routine, or simply the
+effect from anything else that changed at the same time: for example, simply the
 attention that comes with being measured.
 
 The periods are also unequal and short: 71 days against 20. A 20-day window is
@@ -296,29 +287,6 @@ correction, or carbohydrate intake should be based on a slope value produced
 by this script. The slope is an estimate from a noisy interstitial signal with
 its own lag; it is a prompt to look, not a measurement to act on. Confirm with
 a fingerstick where the decision matters, and follow the care team.
-
-**The thresholds are one person's.** −4.5 and +6.0 mmol/L/h were chosen for a
-specific patient, by discussion, based on which episodes that patient cared
-about. Insulin sensitivity, hypoglycaemia awareness, hormonal cycles, activity
-and comorbidities differ enormously between people. Thresholds that are useful
-here could be a source of alarm fatigue for one person and dangerously late for
-another. Anyone reusing this should re-derive their own with their care team.
-
-**Glucose is not under the patient's control the way the numbers imply.** The
-same meal, the same dose and the same activity can produce materially different
-curves on different days — absorption, stress, sleep, illness, hormones and
-sensor behaviour all move the result. Time-in-range figures therefore measure a
-mix of physiology, circumstance and management, and cannot be read as a score
-of effort or compliance. Between-patient comparisons are especially unfair:
-some forms of diabetes are markedly harder to stabilise than others, for
-reasons entirely outside the patient's control. The before/after numbers in
-this document describe what happened to one person over three months. They are
-not a benchmark, and not a target for anyone else.
-
-**Known data gaps.** The insulin export ends on 28 June 2026 while the glucose
-export runs to 20 July 2026, so the last 22 days have no insulin data.
-Timestamps are local with no timezone handling. Sensor warm-up periods and
-outages appear as gaps and are capped, not interpolated.
 
 ---
 
@@ -351,10 +319,3 @@ python analysis/time_in_hypo_stats.py   # analyses; figures land in figures/
 Analysis scripts read from `data/` and resolve every path from their own
 location, so they run from any working directory.
 
-### Privacy
-
-`data/` is git-ignored and contains no committed content. The exports carry the
-patient's real name in their header line; that line is skipped when parsing and
-has been replaced with an anonymised label in the local copies. The figures in
-this README are limited to a single day of trace, or to aggregate statistics —
-never a full multi-month export.
